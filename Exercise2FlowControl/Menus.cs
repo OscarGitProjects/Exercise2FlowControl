@@ -15,8 +15,25 @@ namespace Exercise2FlowControl
             strBuilder.Append(System.Environment.NewLine);
 
             strBuilder.Append("0. Avsluta");
+            strBuilder.Append(System.Environment.NewLine);
+
+            strBuilder.Append("1. Bio");
             //strBuilder.Append(System.Environment.NewLine);
             //strBuilder.Append(System.Environment.NewLine);
+
+            return strBuilder.ToString();
+        }
+
+
+        public static string GetCinemaMenuAskForAge()
+        {
+            StringBuilder strBuilder = new StringBuilder("Meny");
+            strBuilder.Append(System.Environment.NewLine);
+
+            strBuilder.Append("Lokala bion");
+            strBuilder.Append(System.Environment.NewLine);
+
+            strBuilder.Append("Ange er ålder (Ange q för att avbryta): ");
 
             return strBuilder.ToString();
         }
