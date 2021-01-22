@@ -101,33 +101,22 @@ namespace Exercise2FlowControl
 
             do
             {
-                // Visa texten för menyn
-                Console.WriteLine(Menus.GetMenuForTextInput());
+                string strText = Helpers.GetTextInput(Menus.GetMenuForTextInput());
 
-                string strText = Console.ReadLine();
+                strText = strText.Trim();
 
-                if(!String.IsNullOrWhiteSpace(strText))
+                for (int i = 0; i < 10; i++)
                 {
-                    strText = strText.Trim();
-
-                    for (int i = 0; i < 10; i++)
-                    {
-                        if (i != 0)
-                            strBuilder.Append(", ");
-                        strBuilder.Append(strText);
-                    }
-
-                    bRun = false;
-                    Console.Clear();
-                    Console.WriteLine(strBuilder.ToString());
-                    Console.WriteLine("Return för att avsluta");
-                    Console.ReadLine();
+                    if (i != 0)
+                        strBuilder.Append(", ");
+                    strBuilder.Append(strText);
                 }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Felaktig indata!");
-                }
+
+                bRun = false;
+                Console.Clear();
+                Console.WriteLine(strBuilder.ToString());
+                Console.WriteLine("Return för att avsluta");
+                Console.ReadLine();
 
             } while (bRun);
         }
@@ -144,73 +133,62 @@ namespace Exercise2FlowControl
 
             do
             {
-                // Visa texten för menyn
-                Console.WriteLine(Menus.GetShowCinemaMenuForAParty());
+                string strNumberOfPersons = Helpers.GetTextInput(Menus.GetShowCinemaMenuForAParty());
 
-                string strNumberOfPersons = Console.ReadLine();
+                strNumberOfPersons = strNumberOfPersons.ToLower();
+                strNumberOfPersons = strNumberOfPersons.Trim();
 
-                if(!String.IsNullOrWhiteSpace(strNumberOfPersons))
+                if (strNumberOfPersons.CompareTo("q") == 0)
                 {
-                    strNumberOfPersons = strNumberOfPersons.ToLower();
-                    strNumberOfPersons = strNumberOfPersons.Trim();
-
-                    if (strNumberOfPersons.CompareTo("q") == 0)
-                    {
-                        bRun = false;
-                    }
-                    else
-                    {
-                        try
-                        {
-                            int iNumberOfPersons = Int32.Parse(strNumberOfPersons);
-
-                            if(iNumberOfPersons > 0)
-                            {
-                                int iAge = 0;
-                                int iTicketPrice = 0;
-
-                                // Nu vill jag häma ålder för varje person. Ålder bestämemr också priset för en biljett
-                                // Summerar biljett priserna
-                                for (int i = 1; i <= iNumberOfPersons; i++)
-                                {
-                                    // Hämta ålder för en person från ui
-                                    iAge = GetAgeFromUI(i);
-
-                                    if (iAge > 0)
-                                    {
-                                        // Hämta priset på en biljett och summera totala summan
-                                        iTicketPrice = GetTicketPrice(iAge);
-                                        iTotalTicketSum += iTicketPrice;
-                                    }
-                                    else if(iAge == -123)
-                                    {// Användaren har valt att avbryta. Återgå till huvudmenyn
-                                        return;
-                                    }
-                                }
-
-                                // Vi har data om antal personer och priset för biljetterna
-                                string strPerson = "personer";
-                                if (iNumberOfPersons == 1)
-                                    strPerson = "person";
-
-                                bRun = false;
-                                Console.Clear();
-                                Console.WriteLine($"Biljetterna för {iNumberOfPersons} {strPerson} kostar {iTotalTicketSum}");
-                                Console.WriteLine("Return för att avsluta");
-                                Console.ReadLine();
-                            }
-                        }
-                        catch (Exception)
-                        {// Vill fånga alla undantag
-                            Console.Clear();
-                            Console.WriteLine("Felaktig indata!");
-                        }
-                    }
+                    bRun = false;
                 }
                 else
                 {
-                    Console.Clear();
-                    Console.WriteLine("Felaktig indata!");
+                    try
+                    {
+                        int iNumberOfPersons = Int32.Parse(strNumberOfPersons);
+
+                        if(iNumberOfPersons > 0)
+                        {
+                            int iAge = 0;
+                            int iTicketPrice = 0;
+
+                            // Nu vill jag häma ålder för varje person. Ålder bestämemr också priset för en biljett
+                            // Summerar biljett priserna
+                            for (int i = 1; i <= iNumberOfPersons; i++)
+                            {
+                                // Hämta ålder för en person från ui
+                                iAge = GetAgeFromUI(i);
+
+                                if (iAge > 0)
+                                {
+                                    // Hämta priset på en biljett och summera totala summan
+                                    iTicketPrice = Helpers.GetTicketPrice(iAge);
+                                    iTotalTicketSum += iTicketPrice;
+                                }
+                                else if(iAge == -123)
+                                {// Användaren har valt att avbryta. Återgå till huvudmenyn
+                                    return;
+                                }
+                            }
+
+                            // Vi har data om antal personer och priset för biljetterna
+                            string strPerson = "personer";
+                            if (iNumberOfPersons == 1)
+                                strPerson = "person";
+
+                            bRun = false;
+                            Console.Clear();
+                            Console.WriteLine($"Biljetterna för {iNumberOfPersons} {strPerson} kostar {iTotalTicketSum}");
+                            Console.WriteLine("Return för att avsluta");
+                            Console.ReadLine();
+                        }
+                    }
+                    catch (Exception)
+                    {// Vill fånga alla undantag
+                        Console.Clear();
+                        Console.WriteLine("Felaktig indata!");
+                    }
                 }
 
             } while (bRun);
@@ -230,83 +208,40 @@ namespace Exercise2FlowControl
 
             do
             {
-                // Visa texten för menyn
-                Console.WriteLine(Menus.GetCinemaMenuAskForAge(iPerson));
+                string strAge = Helpers.GetTextInput(Menus.GetCinemaMenuAskForAge(iPerson));
 
-                string strAge = Console.ReadLine();
+                strAge = strAge.Trim();
 
-                if (!String.IsNullOrWhiteSpace(strAge))
+                if (strAge.ToLower().CompareTo("q") == 0)
+                {// Användaren har valt att avluta
+                    iAge = -123;
+                    bRun = false;
+                }
+                else
                 {
-                    strAge = strAge.Trim();
-
-                    if (strAge.ToLower().CompareTo("q") == 0)
-                    {// Användaren har valt att avluta
-                        iAge = -123;
-                        bRun = false;
-                    }
-                    else
+                    try
                     {
-                        try
+                        iAge = Int32.Parse(strAge);
+                        if (iAge > 0)
                         {
-                            iAge = Int32.Parse(strAge);
-                            if (iAge > 0)
-                            {
-                                bRun = false;
-                            }
-                            else
-                            {
-                                Console.Clear();
-                                Console.WriteLine("Felaktig indata!");
-                            }
+                            bRun = false;
                         }
-                        catch (Exception)
+                        else
                         {
                             Console.Clear();
                             Console.WriteLine("Felaktig indata!");
                         }
                     }
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Felaktig indata!");
+                    catch (Exception)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Felaktig indata!");
+                    }
                 }
 
             } while (bRun);
 
             return iAge;
-        }
-
-
-        /// <summary>
-        /// Metoden returnerar priset på en biljett. Priset beror på åldern
-        /// </summary>
-        /// <param name="iAge">Kundens ålder</param>
-        /// <returns>Priset på en biljett för sökt ålder</returns>
-        private int GetTicketPrice(int iAge)
-        {
-            int iTicketPrice = 0;
-
-            switch (iAge)
-            {
-                case int age when age < 5:
-                    iTicketPrice = 0;
-                    break;
-                case int age when age < 20:
-                    iTicketPrice = 80;
-                    break;
-                case int age when age > 100:
-                    iTicketPrice = 0;
-                    break;
-                case int age when age > 64:
-                    iTicketPrice = 90; 
-                    break;
-                default:
-                    iTicketPrice = 120; 
-                    break;
-            }
-
-            return iTicketPrice;
         }
 
 
@@ -320,84 +255,73 @@ namespace Exercise2FlowControl
             
             do
             {
-                // Visa texten för menyn
-                Console.WriteLine(Menus.GetCinemaMenuAskForAge());
+                string strAge = Helpers.GetTextInput(Menus.GetCinemaMenuAskForAge());
 
-                string strAge = Console.ReadLine();
+                strAge = strAge.Trim();
 
-                if (!String.IsNullOrWhiteSpace(strAge))
-                {
-                    strAge = strAge.Trim();
-
-                    if (strAge.ToLower().CompareTo("q") == 0)
-                    {                        
-                        bRun = false;
-                    }
-                    else
-                    {
-                        try
-                        {
-                            int iAge = Int32.Parse(strAge);
-
-                            switch (iAge)
-                            {
-                                case int age when age <= 0:
-                                    Console.Clear();
-                                    Console.WriteLine("Felaktig indata!");
-                                    break;
-                                case int age when age < 5:
-                                    Console.Clear();
-                                    Console.WriteLine("Barn pris: 0 kr");
-
-                                    Console.WriteLine("Return för att avsluta");
-                                    Console.ReadLine();
-                                    bRun = false;
-                                    break;
-                                case int age when age < 20:
-                                    Console.Clear();
-                                    Console.WriteLine("Ungdomspris: 80 kr");
-
-                                    Console.WriteLine("Return för att avsluta");
-                                    Console.ReadLine();
-                                    bRun = false;
-                                    break;
-                                case int age when age > 100:
-                                    Console.Clear();
-                                    Console.WriteLine("Pensionärspris över 100 år fyllda: 0 kr");
-
-                                    Console.WriteLine("Return för att avsluta");
-                                    Console.ReadLine();
-                                    bRun = false;
-                                    break;
-                                case int age when age > 64:
-                                    Console.Clear();
-                                    Console.WriteLine("Pensionärspris: 90 kr");
-
-                                    Console.WriteLine("Return för att avsluta");
-                                    Console.ReadLine();
-                                    bRun = false;
-                                    break;
-                                default:
-                                    Console.Clear();
-                                    Console.WriteLine("Standardpris: 120 kr");
-
-                                    Console.WriteLine("Return för att avsluta");
-                                    Console.ReadLine();
-                                    bRun = false;
-                                    break;
-                            }
-                        }
-                        catch (Exception)
-                        {// Jag vill fånga alla undantag
-                            Console.Clear();
-                            Console.WriteLine("Felaktig indata!");
-                        }
-                    }
+                if (strAge.ToLower().CompareTo("q") == 0)
+                {                        
+                    bRun = false;
                 }
                 else
                 {
-                    Console.Clear();
-                    Console.WriteLine("Felaktig indata!");
+                    try
+                    {
+                        int iAge = Int32.Parse(strAge);
+
+                        switch (iAge)
+                        {
+                            case int age when age <= 0:
+                                Console.Clear();
+                                Console.WriteLine("Felaktig indata!");
+                                break;
+                            case int age when age < 5:
+                                Console.Clear();
+                                Console.WriteLine("Barn pris: 0 kr");
+
+                                Console.WriteLine("Return för att avsluta");
+                                Console.ReadLine();
+                                bRun = false;
+                                break;
+                            case int age when age < 20:
+                                Console.Clear();
+                                Console.WriteLine("Ungdomspris: 80 kr");
+
+                                Console.WriteLine("Return för att avsluta");
+                                Console.ReadLine();
+                                bRun = false;
+                                break;
+                            case int age when age > 100:
+                                Console.Clear();
+                                Console.WriteLine("Pensionärspris över 100 år fyllda: 0 kr");
+
+                                Console.WriteLine("Return för att avsluta");
+                                Console.ReadLine();
+                                bRun = false;
+                                break;
+                            case int age when age > 64:
+                                Console.Clear();
+                                Console.WriteLine("Pensionärspris: 90 kr");
+
+                                Console.WriteLine("Return för att avsluta");
+                                Console.ReadLine();
+                                bRun = false;
+                                break;
+                            default:
+                                Console.Clear();
+                                Console.WriteLine("Standardpris: 120 kr");
+
+                                Console.WriteLine("Return för att avsluta");
+                                Console.ReadLine();
+                                bRun = false;
+                                break;
+                        }
+                    }
+                    catch (Exception)
+                    {// Jag vill fånga alla undantag
+                        Console.Clear();
+                        Console.WriteLine("Felaktig indata!");
+                    }
                 }
 
             } while (bRun);
