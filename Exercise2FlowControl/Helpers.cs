@@ -79,13 +79,12 @@ namespace Exercise2FlowControl
         public static List<string> GetWordsFromSentence(string strSentence)
         {
             List<string> lsWords = new List<string>();
-            string[] Words = null;
 
             if (String.IsNullOrWhiteSpace(strSentence))
                 return null;
             
             string[] arrTmpWords = strSentence.Split(' ');
-            if(arrTmpWords.Length > 0)
+            if(arrTmpWords?.Length > 0)
             {// Vi har några ord. Nu vill jag se till att inte vissa ord bara är mellanslag
                 // Vi sparar bara riktiga ord i listan som returneras
                 foreach(string strWord in arrTmpWords)
