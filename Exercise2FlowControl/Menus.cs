@@ -30,6 +30,9 @@ namespace Exercise2FlowControl
             strBuilder.Append(System.Environment.NewLine);
 
             strBuilder.Append("3. Upprepa inmatning från användare");
+            strBuilder.Append(System.Environment.NewLine);
+
+            strBuilder.Append("4. Skriv in en mening med minst tre ord");
 
             return strBuilder.ToString();
         }

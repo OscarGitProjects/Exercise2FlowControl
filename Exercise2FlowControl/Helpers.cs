@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Exercise2FlowControl
 {
@@ -38,10 +39,11 @@ namespace Exercise2FlowControl
             return iTicketPrice;
         }
 
+
         /// <summary>
         /// Metoden hanterar inmatning av en text från användaren
         /// </summary>
-        /// <param name="prompt">Text som skall skrivas ut i kosolen</param>
+        /// <param name="prompt">Text som skall skrivas ut i konsolen</param>
         /// <returns>Texten som har skrivits in av användaren</returns>
         public static string GetTextInput(string prompt)
         {
@@ -65,6 +67,35 @@ namespace Exercise2FlowControl
             } while (bRun);
 
             return strInput;
+        }
+
+
+        /// <summary>
+        /// Metoden tar en mening. Delar meningen i ord vid mellanslagen. 
+        /// Om ordet består av text kommer ordet att sparas i en lista. Listan returneras sedan av metoden
+        /// </summary>
+        /// <param name="strSentence">Mening som skall delas upp i en lista med ord</param>
+        /// <returns>Lista med ord eller en tom lista</returns>
+        public static List<string> GetWordsFromSentence(string strSentence)
+        {
+            List<string> lsWords = new List<string>();
+            string[] Words = null;
+
+            if (String.IsNullOrWhiteSpace(strSentence))
+                return null;
+            
+            string[] arrTmpWords = strSentence.Split(' ');
+            if(arrTmpWords.Length > 0)
+            {// Vi har några ord. Nu vill jag se till att inte vissa ord bara är mellanslag
+                // Vi sparar bara riktiga ord i listan som returneras
+                foreach(string strWord in arrTmpWords)
+                {
+                    if(!String.IsNullOrWhiteSpace(strWord))
+                        lsWords.Add(strWord.Trim());
+                }
+            }
+
+            return lsWords;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Exercise2FlowControl
@@ -74,6 +75,10 @@ namespace Exercise2FlowControl
                         Console.Clear();
                         ShowMenuWhereUserTypesInText();
                         break;
+                    case "4":   // Visa meny där användaren skall skriva in en mening. Vi skall visa det tredje ordet
+                        Console.Clear();
+                        ShowMenuWhereUserTypesInASentence();
+                        break;
                     default:    // Indata är felaktig
                         Console.Clear();
                         Console.WriteLine("Felaktig indata!");
@@ -87,6 +92,39 @@ namespace Exercise2FlowControl
             }
 
             return action;
+        }
+
+
+        /// <summary>
+        /// Metoden hanterar inmatning av en mening som skall bestå av minst tre ord.
+        /// Vi skall sedan visa det tredje ordet
+        /// </summary>
+        private void ShowMenuWhereUserTypesInASentence()
+        {
+            bool bRun = true;
+
+            do
+            {
+                string strText = Helpers.GetTextInput("Skriv in en mening med minst tre ord!");
+
+                // Metoden kommer att konvertera texten med meningar till en lista med varje ord för sig
+                List<string> lsWords = Helpers.GetWordsFromSentence(strText);
+
+                if(lsWords?.Count >= 3)
+                {// Vi har minst tre or
+                    bRun = false;
+                    Console.Clear();
+                    Console.WriteLine($"Tredje ordet är {lsWords[2]}");
+                    Console.WriteLine("Return för att avsluta");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Felaktig indata!");
+                }
+
+            } while (bRun);
         }
 
 
@@ -139,7 +177,7 @@ namespace Exercise2FlowControl
                 strNumberOfPersons = strNumberOfPersons.Trim();
 
                 if (strNumberOfPersons.CompareTo("q") == 0)
-                {
+                {// Användare har valt att avbryta programkörningen
                     bRun = false;
                 }
                 else
@@ -153,7 +191,7 @@ namespace Exercise2FlowControl
                             int iAge = 0;
                             int iTicketPrice = 0;
 
-                            // Nu vill jag häma ålder för varje person. Ålder bestämemr också priset för en biljett
+                            // Nu vill jag hämta ålder för varje person. Ålder bestämemr också priset för en biljett
                             // Summerar biljett priserna
                             for (int i = 1; i <= iNumberOfPersons; i++)
                             {
@@ -213,7 +251,7 @@ namespace Exercise2FlowControl
                 strAge = strAge.Trim();
 
                 if (strAge.ToLower().CompareTo("q") == 0)
-                {// Användaren har valt att avluta
+                {// Användare har valt att avbryta programkörningen
                     iAge = -123;
                     bRun = false;
                 }
@@ -260,7 +298,7 @@ namespace Exercise2FlowControl
                 strAge = strAge.Trim();
 
                 if (strAge.ToLower().CompareTo("q") == 0)
-                {                        
+                {// Användare har valt att avbryta programkörningen                       
                     bRun = false;
                 }
                 else
