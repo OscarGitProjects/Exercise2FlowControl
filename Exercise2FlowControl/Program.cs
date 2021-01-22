@@ -111,7 +111,7 @@ namespace Exercise2FlowControl
                 List<string> lsWords = Helpers.GetWordsFromSentence(strText);
 
                 if(lsWords?.Count >= 3)
-                {// Vi har minst tre or
+                {// Vi har minst tre ord
                     bRun = false;
                     Console.Clear();
                     Console.WriteLine($"Tredje ordet är {lsWords[2]}");

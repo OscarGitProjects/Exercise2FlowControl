@@ -75,14 +75,22 @@ namespace Exercise2FlowControl
         /// Om ordet består av text kommer ordet att sparas i en lista. Listan returneras sedan av metoden
         /// </summary>
         /// <param name="strSentence">Mening som skall delas upp i en lista med ord</param>
-        /// <returns>Lista med ord eller en tom lista</returns>
+        /// <returns>Lista med ord, null eller en tom lista</returns>
         public static List<string> GetWordsFromSentence(string strSentence)
         {
             List<string> lsWords = new List<string>();
 
             if (String.IsNullOrWhiteSpace(strSentence))
                 return null;
-            
+
+            string[] arrTmpWords = strSentence.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if(arrTmpWords?.Length > 0)
+            {
+                foreach (string strWord in arrTmpWords)
+                    lsWords.Add(strWord.Trim());
+            }
+
+            /* OLD
             string[] arrTmpWords = strSentence.Split(' ');
             if(arrTmpWords?.Length > 0)
             {// Vi har några ord. Nu vill jag se till att inte vissa ord bara är mellanslag
@@ -92,7 +100,7 @@ namespace Exercise2FlowControl
                     if(!String.IsNullOrWhiteSpace(strWord))
                         lsWords.Add(strWord.Trim());
                 }
-            }
+            }*/
 
             return lsWords;
         }
